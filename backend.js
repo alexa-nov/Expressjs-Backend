@@ -86,11 +86,21 @@ function findUserById(id) {
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).end();
 });
 
+function idGenerator(){
+    let id = '';
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 7; i++){
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return id;
+}
+
 function addUser(user){
-    users['users_list'].push(user);
+    user.id = idGenerator()
+    users['users_list'].push(user)
 }
 
 app.delete('/users/:id', (req, res) => {
